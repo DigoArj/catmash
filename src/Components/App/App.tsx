@@ -1,3 +1,3 @@
 import React from 'react';
 
-export const App: React.FC = () => <div className="App">catmash</div>;
+export const App: React.FC = () => <div>catmash</div>;
