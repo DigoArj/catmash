@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from 'emotion';
-import { Cat } from 'Components';
+import { Cat, Title } from 'Components';
 
 const styles = css`
   width: 100vw;
@@ -16,7 +16,6 @@ const styles = css`
     margin: 0 auto;
   }
 
-  > header,
   > footer {
     display: flex;
     flex-direction: column;
@@ -25,24 +24,6 @@ const styles = css`
     position: absolute;
     left: 0;
     right: 0;
-  }
-
-  > header {
-    font-family: 'Trade Winds', cursive;
-    font-size: 55px;
-    user-select: none;
-    line-height: 75px;
-    padding: 32px 0;
-
-    > h5 {
-      font-family: 'Itim', cursive;
-      font-size: 30px;
-      line-height: 40px;
-    }
-
-    > img {
-      height: 100%;
-    }
   }
 
   > footer {
@@ -100,10 +81,7 @@ const styles = css`
 
 export const App: React.FC = () => (
   <div className={styles}>
-    <header>
-      <h1>catmash</h1>
-      <h5>Lequel sera le plus choupinou ?</h5>
-    </header>
+    <Title />
 
     <main>
       <Cat srcUrl="http://24.media.tumblr.com/tumblr_m82woaL5AD1rro1o5o1_1280.jpg" alt="cat MTgwODA3MA" />
