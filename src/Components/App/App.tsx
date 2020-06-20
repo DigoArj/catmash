@@ -1,6 +1,7 @@
 import React from 'react';
 import { css } from 'emotion';
 import { Cat, Scores, Title, Versus } from 'Components';
+import { useLocation } from 'react-router-dom';
 
 const styles = css`
   width: 100vw;
@@ -24,16 +25,20 @@ const styles = css`
   }
 `;
 
-export const App: React.FC = () => (
-  <div className={styles}>
-    <Title />
+export const App: React.FC = () => {
+  const { pathname } = useLocation();
 
-    <main>
-      <Cat srcUrl="http://24.media.tumblr.com/tumblr_m82woaL5AD1rro1o5o1_1280.jpg" alt="cat MTgwODA3MA" />
-      <Versus />
-      <Cat srcUrl="http://24.media.tumblr.com/tumblr_lzqv50jiCj1qzex9io1_1280.jpg" alt="cat 5v3" />
-    </main>
+  return (
+    <div className={styles}>
+      <Title />
 
-    <Scores />
-  </div>
-);
+      <main>
+        <Cat srcUrl="http://24.media.tumblr.com/tumblr_m82woaL5AD1rro1o5o1_1280.jpg" alt="cat MTgwODA3MA" />
+        <Versus />
+        <Cat srcUrl="http://24.media.tumblr.com/tumblr_lzqv50jiCj1qzex9io1_1280.jpg" alt="cat 5v3" />
+      </main>
+
+      <Scores isOpen={pathname === '/scores'} />
+    </div>
+  );
+};

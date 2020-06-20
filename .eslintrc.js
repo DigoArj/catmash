@@ -30,6 +30,8 @@ module.exports = {
       },
     ],
 
+    '@typescript-eslint/no-empty-function' : 'off',
+
     'react/prop-types': 'off',
 
     'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
