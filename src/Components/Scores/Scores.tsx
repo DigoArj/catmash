@@ -4,6 +4,7 @@ import { Overlay } from './Subcomponents';
 import { Link, useHistory } from 'react-router-dom';
 import { motion, useMotionValue } from 'framer-motion';
 import { useScrollConstraints, useWheelScroll } from './Utils';
+import { CatList } from 'Components/CatList/CatList';
 
 const openSpring = { type: 'spring', stiffness: 200, damping: 30 };
 const closeSpring = { type: 'spring', stiffness: 300, damping: 35 };
@@ -120,8 +121,7 @@ export const Scores: React.FC<Props> = ({ isOpen }) => {
           onDrag={checkSwipeToDismiss}
           onUpdate={checkZIndex}
         >
-          {!isOpen && <span>Scruter les scores</span>}
-          {isOpen && <img src="http://placeimg.com/640/480/animals" alt="placeholder" />}
+          {isOpen ? <CatList /> : <span>Scruter les scores</span>}
         </motion.div>
         {!isOpen && <Link to="/scores" className="open-link" />}
       </div>

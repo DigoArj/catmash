@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 
 const styles = css`
   height: 250px;
@@ -30,10 +30,11 @@ const styles = css`
 interface Props {
   srcUrl: string;
   alt: string;
+  className?: string;
 }
 
-export const Cat: React.FC<Props> = ({ srcUrl, alt }) => (
-  <div className={styles}>
+export const Cat: React.FC<Props> = ({ srcUrl, alt, className }) => (
+  <div className={cx(styles, className)}>
     <img src={srcUrl} alt={alt} />
   </div>
 );

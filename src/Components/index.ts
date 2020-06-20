@@ -3,3 +3,5 @@ export { Cat } from './Cat/Cat';
 export { Title } from './Title/Title';
 export { Scores } from './Scores/Scores';
 export { Versus } from './Versus/Versus';
+export { CatList } from './CatList/CatList';
+export { PositionedCat } from './PositionedCat/PositionedCat';
