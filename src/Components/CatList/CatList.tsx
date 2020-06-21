@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { API } from 'aws-amplify';
 import { Cat, Loader, PositionedCat } from 'Components';
 import { css } from 'emotion';
+import { useApp } from 'Stores';
 
 const styles = css`
   > ul {
@@ -50,11 +50,10 @@ const loaderStyles = css`
 `;
 
 export const CatList: React.FC = () => {
+  const { loadCats } = useApp();
   const [loading, setLoading] = useState(true);
-  const [cats, setCats] = useState([]);
+  const [cats, setCats] = useState<Array<Cat>>([]);
   const [error, setError] = useState(false);
-
-  const loadCats = () => API.get('cats', '/cats', {});
 
   useEffect(() => {
     const onLoad = async () => {
@@ -69,7 +68,7 @@ export const CatList: React.FC = () => {
     };
 
     onLoad().then();
-  }, []);
+  }, [loadCats]);
 
   if (error) {
     return <span>An error occurred.</span>;
