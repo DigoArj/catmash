@@ -35,6 +35,7 @@ const styles = css`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    padding-bottom: 32px;
 
     > li {
       margin-top: 16px;
