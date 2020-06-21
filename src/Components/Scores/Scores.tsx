@@ -4,7 +4,7 @@ import { Overlay } from './Subcomponents';
 import { Link, useHistory } from 'react-router-dom';
 import { motion, useMotionValue } from 'framer-motion';
 import { useScrollConstraints, useWheelScroll } from './Utils';
-import { CatList } from 'Components/CatList/CatList';
+import { CatList } from 'Components';
 
 const openSpring = { type: 'spring', stiffness: 200, damping: 30 };
 const closeSpring = { type: 'spring', stiffness: 300, damping: 35 };
@@ -56,7 +56,7 @@ const styles = css`
       border-top-right-radius: 15px;
       box-shadow: 0px -2px 4px 4px #00000040;
 
-      transition: height 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6), border-radius 2s ease-in-out;
+      transition: height 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6), border-radius 0.5s ease-in-out;
     }
 
     &:hover > .card-content {

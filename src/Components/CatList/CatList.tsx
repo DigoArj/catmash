@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { API } from 'aws-amplify';
-import { Cat, PositionedCat } from 'Components';
+import { Cat, Loader, PositionedCat } from 'Components';
 import { css } from 'emotion';
 
 const styles = css`
@@ -42,6 +42,12 @@ const styles = css`
   }
 `;
 
+const loaderStyles = css`
+  height: 80vh;
+  display: flex;
+  align-items: center;
+`;
+
 export const CatList: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [cats, setCats] = useState([]);
@@ -58,7 +64,7 @@ export const CatList: React.FC = () => {
         setError(true);
       }
 
-      setLoading(false);
+      setTimeout(() => setLoading(false), 1500);
     };
 
     onLoad().then();
@@ -69,7 +75,11 @@ export const CatList: React.FC = () => {
   }
 
   if (loading) {
-    return <div>loading...</div>;
+    return (
+      <div className={loaderStyles}>
+        <Loader />
+      </div>
+    );
   }
 
   return (
