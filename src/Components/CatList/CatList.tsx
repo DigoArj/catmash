@@ -39,6 +39,7 @@ const styles = css`
 
     > li {
       margin-top: 16px;
+      margin-left: 16px;
     }
   }
 `;
@@ -91,9 +92,9 @@ export const CatList: React.FC = () => {
         ))}
       </ul>
       <ul className="others">
-        {cats.slice(3).map(({ catId, imageUrl }) => (
+        {cats.slice(3).map(({ catId, imageUrl }, i) => (
           <li key={catId}>
-            <Cat srcUrl={imageUrl} alt={`cat ${catId}`} />
+            <Cat srcUrl={imageUrl} alt={`cat ${catId}`} rank={i + 4} small />
           </li>
         ))}
       </ul>
