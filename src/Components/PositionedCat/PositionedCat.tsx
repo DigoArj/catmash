@@ -53,11 +53,12 @@ interface Props {
   id: string;
   imgUrl: string;
   position: number;
+  score?: number;
 }
 
-export const PositionedCat: React.FC<Props> = ({ id, imgUrl, position }) => (
+export const PositionedCat: React.FC<Props> = ({ id, imgUrl, score, position }) => (
   <li className={styles}>
     <span className={spanStyles(position)}>{position}</span>
-    <Cat className="positioned-cat" srcUrl={imgUrl} alt={`cat ${id}`} />
+    <Cat className="positioned-cat" srcUrl={imgUrl} alt={`cat ${id}`} score={score} />
   </li>
 );

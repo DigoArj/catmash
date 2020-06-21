@@ -18,6 +18,20 @@ const styles = css`
   &:hover {
     transform: scale(1.1);
     cursor: pointer;
+
+    > .score {
+      opacity: 1;
+      user-select: none;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      color: black;
+      background: darkgray;
+      padding: 4px;
+      border-radius: 16px;
+      line-height: 20px;
+      font-size: 20px;
+    }
   }
 
   > .loader {
@@ -52,6 +66,11 @@ const styles = css`
     -webkit-text-fill-color: transparent;
     -webkit-text-stroke: 2px white;
   }
+
+  > .score {
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out;
+  }
 `;
 
 const smallStyles = css`
@@ -62,13 +81,14 @@ const smallStyles = css`
 interface Props {
   srcUrl: string;
   alt: string;
+  score?: number;
   small?: boolean;
   rank?: number;
   onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   className?: string;
 }
 
-export const Cat: React.FC<Props> = ({ srcUrl, alt, small = false, rank, onClick, className }) => {
+export const Cat: React.FC<Props> = ({ srcUrl, alt, small = false, score, rank, onClick, className }) => {
   const [loaded, setLoaded] = useState(false);
 
   const handleOnLoad = () => setLoaded(true);
@@ -78,6 +98,7 @@ export const Cat: React.FC<Props> = ({ srcUrl, alt, small = false, rank, onClick
       {!loaded && <Loader className="loader" />}
       <img src={srcUrl} alt={alt} onLoad={handleOnLoad} style={{ opacity: loaded ? '1' : '0' }} />
       {rank && <span className="rank">{rank}</span>}
+      {score && <div className="score">{score}</div>}
     </div>
   );
 };

@@ -87,14 +87,14 @@ export const CatList: React.FC = () => {
   return (
     <div className={styles}>
       <ul className="podium">
-        {cats.slice(0, 3).map(({ catId, imageUrl }, i) => (
-          <PositionedCat key={catId} id={catId} imgUrl={imageUrl} position={i + 1} />
+        {cats.slice(0, 3).map(({ catId, imageUrl, score }, i) => (
+          <PositionedCat key={catId} id={catId} imgUrl={imageUrl} score={score} position={i + 1} />
         ))}
       </ul>
       <ul className="others">
-        {cats.slice(3).map(({ catId, imageUrl }, i) => (
+        {cats.slice(3).map(({ catId, imageUrl, score }, i) => (
           <li key={catId}>
-            <Cat srcUrl={imageUrl} alt={`cat ${catId}`} rank={i + 4} small />
+            <Cat srcUrl={imageUrl} alt={`cat ${catId}`} score={score} rank={i + 4} small />
           </li>
         ))}
       </ul>
