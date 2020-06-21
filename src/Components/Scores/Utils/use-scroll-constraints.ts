@@ -1,5 +1,6 @@
 // from AppStore-like UI: https://www.framer.com/api/motion/examples/#ui-patterns
 import React, { useState, useEffect } from 'react';
+import useResizeObserver from 'use-resize-observer';
 
 interface Constraints {
   top: number;
@@ -15,6 +16,8 @@ export const useScrollConstraints = (ref: React.RefObject<HTMLDivElement>, measu
     bottom: 0,
   });
 
+  const { height } = useResizeObserver({ ref });
+
   useEffect(() => {
     if (!measureConstraints) return;
 
@@ -29,7 +32,7 @@ export const useScrollConstraints = (ref: React.RefObject<HTMLDivElement>, measu
 
     setConstraints({ top, bottom: 0 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [measureConstraints]);
+  }, [measureConstraints, height]);
 
   return constraints;
 };
