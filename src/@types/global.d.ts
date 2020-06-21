@@ -14,6 +14,8 @@ interface AppContext {
   loadCats: () => Promise<Array<Cat>>;
   newMash: () => void;
   updateScore: (winner: Cat) => void;
+  voteForLeft: () => void;
+  voteForRight: () => void;
 }
 
 type CalculateNewScoresFn = (winnerScore: number, loserScore: number) => [number, number];

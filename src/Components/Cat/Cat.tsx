@@ -39,16 +39,17 @@ const styles = css`
 interface Props {
   srcUrl: string;
   alt: string;
+  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   className?: string;
 }
 
-export const Cat: React.FC<Props> = ({ srcUrl, alt, className }) => {
+export const Cat: React.FC<Props> = ({ srcUrl, alt, onClick, className }) => {
   const [loaded, setLoaded] = useState(false);
 
   const handleOnLoad = () => setLoaded(true);
 
   return (
-    <div className={cx(styles, className)}>
+    <div className={cx(styles, className)} onClick={onClick}>
       {!loaded && <Loader className="loader" />}
       <img src={srcUrl} alt={alt} onLoad={handleOnLoad} style={{ opacity: loaded ? '1' : '0' }} />
     </div>

@@ -1,12 +1,13 @@
-import React, { useContext, createContext, useState, useCallback } from 'react';
+import React, { useContext, createContext, useState, useCallback, useEffect } from 'react';
 import { calculateNewScores, getRandom } from 'Utils';
 import { API } from 'aws-amplify';
 
 const AppContext = createContext<AppContext>({
-  currentMash: undefined,
   loadCats: () => Promise.resolve([]),
   newMash: () => {},
   updateScore: () => Promise.resolve(),
+  voteForLeft: () => {},
+  voteForRight: () => {},
 });
 
 export const AppProvider: React.FC = ({ children }) => {
@@ -42,7 +43,27 @@ export const AppProvider: React.FC = ({ children }) => {
     [currentMash],
   );
 
-  return <AppContext.Provider value={{ currentMash, loadCats, newMash, updateScore }}>{children}</AppContext.Provider>;
+  const voteFor = useCallback((cat: Cat) => updateScore(cat).then(newMash), [updateScore, newMash]);
+
+  const voteForLeft = useCallback(() => {
+    currentMash && voteFor(currentMash.left).then();
+  }, [currentMash, voteFor]);
+
+  const voteForRight = useCallback(() => {
+    currentMash && voteFor(currentMash.right).then();
+  }, [currentMash, voteFor]);
+
+  // init first mash
+  useEffect(
+    () => newMash(),
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
+  return (
+    <AppContext.Provider value={{ currentMash, loadCats, newMash, updateScore, voteForLeft, voteForRight }}>{children}</AppContext.Provider>
+  );
 };
 
 export const useApp = (): AppContext => useContext(AppContext);
