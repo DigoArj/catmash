@@ -46,6 +46,7 @@ const loaderStyles = css`
   height: 80vh;
   display: flex;
   align-items: center;
+  justify-content: center;
 `;
 
 export const CatList: React.FC = () => {

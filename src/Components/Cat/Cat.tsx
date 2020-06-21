@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { css, cx } from 'emotion';
+import { Loader } from 'Components';
 
 const styles = css`
   height: 250px;
@@ -24,6 +25,14 @@ const styles = css`
     object-fit: cover;
     object-position: center;
     user-select: none;
+
+    transition: opacity 0.5s ease;
+  }
+
+  > .loader {
+    max-height: 100%;
+    max-width: 50%;
+    margin: auto;
   }
 `;
 
@@ -33,8 +42,15 @@ interface Props {
   className?: string;
 }
 
-export const Cat: React.FC<Props> = ({ srcUrl, alt, className }) => (
-  <div className={cx(styles, className)}>
-    <img src={srcUrl} alt={alt} />
-  </div>
-);
+export const Cat: React.FC<Props> = ({ srcUrl, alt, className }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  const handleOnLoad = () => setLoaded(true);
+
+  return (
+    <div className={cx(styles, className)}>
+      {!loaded && <Loader className="loader" />}
+      <img src={srcUrl} alt={alt} onLoad={handleOnLoad} style={{ opacity: loaded ? '1' : '0' }} />
+    </div>
+  );
+};
