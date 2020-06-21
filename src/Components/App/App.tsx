@@ -34,7 +34,7 @@ export const App: React.FC = () => {
     <div className={styles}>
       <Title />
 
-      <main>{currentMash ? <Vote /> : <Loader />}</main>
+      <main>{currentMash ? <Vote /> : <Loader white />}</main>
 
       <Scores isOpen={pathname === '/scores'} />
     </div>
