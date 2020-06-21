@@ -23,7 +23,7 @@ Amplify.configure({
 ReactDOM.render(
   <React.StrictMode>
     <AppProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Route path={['/scores', '/']} component={App} />
       </BrowserRouter>
     </AppProvider>
