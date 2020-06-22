@@ -98,7 +98,7 @@ export const Cat: React.FC<Props> = ({ srcUrl, alt, small = false, score, rank, 
       {!loaded && <Loader className="loader" />}
       <img src={srcUrl} alt={alt} onLoad={handleOnLoad} style={{ opacity: loaded ? '1' : '0' }} />
       {rank && <span className="rank">{rank}</span>}
-      {score && <div className="score">{score}</div>}
+      {score !== undefined && <div className="score">{score}</div>}
     </div>
   );
 };
