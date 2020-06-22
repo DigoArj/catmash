@@ -3,33 +3,40 @@ import { calculateNewScores, getRandom } from 'Utils';
 import { API } from 'aws-amplify';
 
 const AppContext = createContext<AppContext>({
+  loaded: false,
+  currentMash: {} as Mash,
   loadCats: () => Promise.resolve([]),
-  newMash: () => {},
-  updateScore: () => Promise.resolve(),
+  newMash: () => Promise.resolve(),
   voteForLeft: () => {},
   voteForRight: () => {},
 });
 
 export const AppProvider: React.FC = ({ children }) => {
-  const [currentMash, setCurrentMash] = useState<Mash>();
+  const [loaded, setLoaded] = useState(false);
+  const [currentMash, setCurrentMash] = useState<Mash>({} as Mash);
 
   const loadCats = useCallback((): Promise<Array<Cat>> => API.get('cats', '/cats', {}), []);
 
-  const newMash = useCallback(() => {
-    loadCats().then(cats => {
-      const leftIndex = getRandom(cats.length);
+  const newMash = useCallback(
+    () =>
+      loadCats().then(cats => {
+        const lastIndex = cats.length - 1;
+        const indexOffset = 1 + getRandom(7);
 
-      // choose a random index around left index so that we have cats of roughly the same level
-      const rightIndex = leftIndex === cats.length - 1 ? leftIndex - 1 - getRandom(7) : Math.min(leftIndex + 1 + getRandom(7), cats.length);
+        const leftIndex = getRandom(lastIndex);
 
-      setCurrentMash({
-        left: cats[leftIndex],
-        right: cats[rightIndex],
-      });
-    });
-  }, [loadCats]);
+        // choose a random index around left index so that we have cats of roughly the same level
+        const rightIndex = leftIndex === lastIndex ? leftIndex - indexOffset : Math.min(leftIndex + indexOffset, lastIndex);
 
-  const updateScore = useCallback(
+        setCurrentMash({
+          left: cats[leftIndex],
+          right: cats[rightIndex],
+        });
+      }),
+    [loadCats],
+  );
+
+  const updateScores = useCallback(
     async (winner: Cat) => {
       if (!currentMash) return;
 
@@ -43,27 +50,40 @@ export const AppProvider: React.FC = ({ children }) => {
     [currentMash],
   );
 
-  const voteFor = useCallback((cat: Cat) => updateScore(cat).then(newMash), [updateScore, newMash]);
+  const voteFor = useCallback(
+    (cat: Cat) => {
+      setLoaded(false);
 
-  const voteForLeft = useCallback(() => {
-    currentMash && voteFor(currentMash.left).then();
-  }, [currentMash, voteFor]);
+      updateScores(cat)
+        .then(newMash)
+        .then(() => setLoaded(true));
+    },
+    [updateScores, newMash],
+  );
 
-  const voteForRight = useCallback(() => {
-    currentMash && voteFor(currentMash.right).then();
-  }, [currentMash, voteFor]);
+  const voteForLeft = useCallback(() => voteFor(currentMash.left), [currentMash, voteFor]);
+
+  const voteForRight = useCallback(() => voteFor(currentMash.right), [currentMash, voteFor]);
 
   // init first mash
   useEffect(
-    () => newMash(),
-
+    () => {
+      newMash().then(() => setLoaded(true));
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 
-  return (
-    <AppContext.Provider value={{ currentMash, loadCats, newMash, updateScore, voteForLeft, voteForRight }}>{children}</AppContext.Provider>
-  );
+  const value: AppContext = {
+    loaded,
+    currentMash,
+    loadCats,
+    newMash,
+    voteForLeft,
+    voteForRight,
+  };
+
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
 export const useApp = (): AppContext => useContext(AppContext);

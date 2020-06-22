@@ -10,10 +10,10 @@ interface Mash {
 }
 
 interface AppContext {
-  currentMash?: Mash;
+  loaded: boolean;
+  currentMash: Mash;
   loadCats: () => Promise<Array<Cat>>;
   newMash: () => void;
-  updateScore: (winner: Cat) => void;
   voteForLeft: () => void;
   voteForRight: () => void;
 }

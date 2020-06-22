@@ -28,13 +28,13 @@ const styles = css`
 
 export const App: React.FC = () => {
   const { pathname } = useLocation();
-  const { currentMash } = useApp();
+  const { loaded } = useApp();
 
   return (
     <div className={styles}>
       <Title />
 
-      <main>{currentMash ? <Vote /> : <Loader white />}</main>
+      <main>{loaded ? <Vote /> : <Loader white />}</main>
 
       <Scores isOpen={pathname === '/scores'} />
     </div>
