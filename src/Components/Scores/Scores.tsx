@@ -81,7 +81,7 @@ const styles = css`
       margin: auto;
       width: 1200px;
       overflow: hidden;
-
+      cursor: default;
       border-radius: 15px;
     }
   }
