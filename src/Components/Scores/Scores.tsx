@@ -49,8 +49,8 @@ const styles = css`
       pointer-events: auto;
       margin: 0 auto;
 
-      background: #bc4e9c;
-      background: linear-gradient(15deg, #f80759, #bc4e9c);
+      background: #6b0f1a;
+      background: linear-gradient(105deg, #6b0f1a 0%, #b91372 74%);
 
       border-top-left-radius: 15px;
       border-top-right-radius: 15px;
